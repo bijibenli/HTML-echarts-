@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="lib/echarts.min.js"></script>
+  <script src="lib/jquery.min.js"></script>
+</head>
+
+<body>
+  <div style="width: 600px;height:400px"></div>
+  <button id="btn1">触发行为</button>
+  <button id="btn2">clear</button>
+  <button id="btn3">setoption</button>
+  <button id="btn4">dispose</button>
+  <script>
+    //1. ECharts最基本的代码结构
+    //2. 准备数据[{name:???, value:??? },{}]
+    //   淘宝: 11231  京东: 22673  唯品会: 6123  1号店: 8989   聚美优品: 6700
+    //3. 将type的值设置为pie
+    var mCharts = echarts.init(document.querySelector("div"))
+    // pieData就是需要设置给饼图的数据, 数组,数组中包含一个又一个的对象, 每一个对象中, 需要有name和value
+    var pieData = [
+      {
+        name: '淘宝',
+        value: 11231
+      },
+      {
+        name: '京东',
+        value: 22673
+      },
+      {
+        name: '唯品会',
+        value: 6123
+      },
+      {
+        name: '1号店',
+        value: 8989
+      },
+      {
+        name: '聚美优品',
+        value: 6700
+      }
+    ]
+    var option = {
+        tooltip: {
+            show: true
+        },
+        legend:{
+            data:['淘宝','京东','唯品会','1号店','聚美优品']
+        },
+      series: [
+        {
+          type: 'pie',
+          data: pieData
+        }
+      ]
+    }
+    mCharts.setOption(option)
+    //on\off 使用方法
+    mCharts.on('click',function(arg)//点击事件 click dbclick mousedown mousemove mouseup等等
+    {})
+    mCharts.off('click')//解绑click
+    mCharts.on('legendselectchanged',function(arg)
+    {
+        console.log(arg)
+        console.log('legendselectchanged')
+    })
+    //模拟用户行为
+    $('#btn1').click(function()
+    {
+        mCharts.dispatchAction({
+            type:'highlight',//事件类型
+            seriesIndex:0,//图表索引
+            dataIndex:1//图表中的哪一项高亮
+        })
+        mCharts.dispatchAction({
+            type: 'showTip',
+            seriesIndex: 0,
+            dataIndex: 2
+         })
+    })
+    $('#btn2').click(function()
+    {
+        mCharts.clear()//清空当前实例
+    })
+    $('#btn3').click(function()
+    {
+        mCharts.setOption(option)//重新加载当前实例
+    })
+    $('#btn4').click(function()
+    {
+        mCharts.dispose()//销毁实例对象,且无法恢复
+    })
+  </script>
+</body>
+
+</html>

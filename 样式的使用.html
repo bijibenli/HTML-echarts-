@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="lib/echarts.min.js"></script>
+</head>
+
+<body>
+  <div style="width: 600px;height:400px"></div>
+  <script>
+   //直接样式
+   //	itemStyle textStyle lineStyle areaStyle label
+   //高亮样式
+   //在emphasis中包裹 itemStyle textStyle lineStyle areaStyle label
+    var mCharts = echarts.init(document.querySelector("div"))
+    // pieData就是需要设置给饼图的数据, 数组,数组中包含一个又一个的对象, 每一个对象中, 需要有name和value
+    var pieData = [
+      {
+        name: '淘宝',
+        value: 11231,
+		itemStyle:{//控制淘宝这一区域的设置
+			color:'yellow'
+		},
+		label:{//图示的文字
+			color:'green'
+		},
+		//高亮样式
+		emphasis:{
+			itemStyle:{
+				color:'pink'
+			},
+			label:{
+				color:'black'
+			},
+		}
+      },
+      {
+        name: '京东',
+        value: 22673
+      },
+      {
+        name: '唯品会',
+        value: 6123
+      },
+      {
+        name: '1号店',
+        value: 8989
+      },
+      {
+        name: '聚美优品',
+        value: 6700
+      }
+    ]
+    var option = {
+		title:{
+			text:'饼图 de 测试',
+			textStyle:{//控制标题的文字样式
+				color:'blue'
+			}
+		},
+      series: [
+        {
+          type: 'pie',
+          data: pieData
+        }
+      ]
+    }
+    mCharts.setOption(option)
+  </script>
+</body>
+
+</html>
